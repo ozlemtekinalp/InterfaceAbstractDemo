@@ -6,11 +6,18 @@ namespace GameProject
 {
     class CustomerManager
     {
+        ICustomerCheckService customerCheckService;
+
+        public CustomerManager(ICustomerCheckService customerCheckService)
+        {
+            this.customerCheckService = customerCheckService;
+        }
+
         public void Add(Customer customer)
         {
-            CustomerCheckService customerCheckService = new CustomerCheckService();
-            customerCheckService.Validate(customer);
-            Console.WriteLine("Oyuncu eklendi:"+ customer.FirstName +" "+ customer.LastName);
+            if (customerCheckService.Validate(customer) == true)
+            { Console.WriteLine("Oyuncu eklendi:" + customer.FirstName + " " + customer.LastName); }
+            else { Console.WriteLine("Oyuncu eklenemedi"); }
         }
 
         public void Delete(Customer customer) {
